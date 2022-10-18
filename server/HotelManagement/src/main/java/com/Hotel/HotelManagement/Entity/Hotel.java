@@ -1,0 +1,60 @@
+package com.Hotel.HotelManagement.Entity;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+//import javax.persistence.Table;
+
+@Entity
+//@Table(name="hotelmanagement")
+public class Hotel {
+	
+	private String hotelname;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long hotel_id;
+	private String location;
+	private String phonenumber;
+	@Override
+	public String toString() {
+		return "Hotel [hotelname=" + hotelname + ", hotel_id=" + hotel_id + ", location=" + location + ", phonenumber="
+				+ phonenumber + "]";
+	}
+	public Hotel() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Hotel(String hotelname, long hotel_id, String location, String phonenumber) {
+		super();
+		this.hotelname = hotelname;
+		this.hotel_id = hotel_id;
+		this.location = location;
+		this.phonenumber = phonenumber;
+	}
+	public String getHotelname() {
+		return hotelname;
+	}
+	public void setHotelname(String hotelname) {
+		this.hotelname = hotelname;
+	}
+	public long getHotel_id() {
+		return hotel_id;
+	}
+	public void setHotel_id(long hotel_id) {
+		this.hotel_id = hotel_id;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	public String getPhonenumber() {
+		return phonenumber;
+	}
+	public void setPhonenumber(String phonenumber) {
+		this.phonenumber = phonenumber;
+	}
+
+}
