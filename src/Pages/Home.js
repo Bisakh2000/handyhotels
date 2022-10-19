@@ -50,7 +50,7 @@ const deleteHotel=async(hotel_id) =>{
       <td>{user.location}</td>
       <td>{user.phonenumber}</td>
       <td>
-        <button className='btn btn-primary mx-2'>View</button>
+        
         <Link className='btn btn-outline-primary mx-2' to={`/updatehotel/${user.hotel_id}`}>
         Update</Link>
         <button className='btn btn-danger mx-2'
