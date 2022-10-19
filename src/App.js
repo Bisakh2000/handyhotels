@@ -7,6 +7,7 @@ import Home from './Pages/Home';
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import AddHotel from './Hotels/AddHotel';
 import UpdateHotel from './Hotels/UpdateHotel';
+import Login from './Pages/Login';
 
 function App() {
   return (
@@ -14,9 +15,11 @@ function App() {
       <Router>
       <Navbar />
       <Routes>
-      <Route exact path='/' element={<Home />} />
+      <Route exact path='/' element={<Login />}/> 
+      <Route exact path='/home' element={<Home />} />
       <Route exact path='/addhotel' element={<AddHotel />} />
       <Route exact path='/updatehotel/:hotel_id' element={<UpdateHotel />}/>
+      {/* <Route exact path=`/login` el */}
 
       </Routes>
     

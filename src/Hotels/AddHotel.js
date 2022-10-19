@@ -23,7 +23,7 @@ export default function AddHotel() {
     const onSubmit = async (e) => {
         e.preventDefault();
         await axios.post("http://localhost:9090/hotels", user);
-        navigate("/");
+        navigate("/home");
     };
 
 
@@ -78,7 +78,7 @@ export default function AddHotel() {
                 </div>
 
                <button type='submit' className='btn btn-outline-success'>Submit</button>
-               <Link className='btn btn-outline-danger mx-2' to={'/'}>Cancel</Link>
+               <Link className='btn btn-outline-danger mx-2' to={'/home'}>Cancel</Link>
 
                </form>
 
