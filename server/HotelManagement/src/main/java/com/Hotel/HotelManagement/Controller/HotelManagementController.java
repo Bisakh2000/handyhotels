@@ -1,6 +1,7 @@
 package com.Hotel.HotelManagement.Controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -17,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.Hotel.HotelManagement.Entity.Hotel;
 import com.Hotel.HotelManagement.Service.HotelService;
+import com.Hotel.HotelManagement.payloads.HotelDto;
 
 @RestController
+@CrossOrigin("http://localhost:3000")
 public class HotelManagementController {
 	@Autowired
 	private HotelService service;
@@ -45,20 +49,21 @@ public class HotelManagementController {
 		
 	}
 	
-	@PutMapping("/hotels")
-	public Hotel updateHotel(@RequestBody Hotel hotel) {
-		return this.service.updateHotel(hotel);
+	@PutMapping("/hotels/{hotel_id}")
+	public ResponseEntity<HotelDto> updateHotel(@RequestBody HotelDto hoteldto,@PathVariable Long hotel_id) {
+		HotelDto updatedUser = this.service.updateHotel(hoteldto, hotel_id);
+		return ResponseEntity.ok(updatedUser);
 		
 	}
 	
 	@DeleteMapping("/hotels/{hotel_id}")
-	public ResponseEntity<HttpStatus> deleteHotel(@PathVariable String hotel_id){
+	public ResponseEntity<?> deleteHotel(@PathVariable Long hotel_id){
 		try {
-			this.service.deleteHotel(Long.parseLong(hotel_id));
-			return new ResponseEntity<>(HttpStatus.OK);
+			this.service.deleteHotel(hotel_id);
+			return new ResponseEntity<>(Map.of("message", "User Deleted Successfully"), HttpStatus.OK);
 		}
 		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 	}
 	

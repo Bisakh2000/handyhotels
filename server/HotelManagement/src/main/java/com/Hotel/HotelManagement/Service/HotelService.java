@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.Hotel.HotelManagement.Entity.Hotel;
+import com.Hotel.HotelManagement.payloads.HotelDto;
 
 public interface HotelService {
 	
@@ -13,7 +14,7 @@ public interface HotelService {
 	
 	public Hotel addHotel(Hotel hotel);
 	
-	public Hotel updateHotel(Hotel hotel);
+	public HotelDto updateHotel(HotelDto hoteldto , Long hotel_id);
 	
 	public void deleteHotel(long hotel_id );
 

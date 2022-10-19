@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import com.Hotel.HotelManagement.Dao.HotelDao;
 import com.Hotel.HotelManagement.Entity.Hotel;
+import com.Hotel.HotelManagement.Exceptions.ResourceNotFoundException;
+import com.Hotel.HotelManagement.payloads.HotelDto;
 
 @Service
 public class HotelServiceImpl implements HotelService {
@@ -55,28 +57,53 @@ public class HotelServiceImpl implements HotelService {
 	}
 
 	@Override
-	public Hotel updateHotel(Hotel hotel) {
-//		list.forEach(e ->{
-//			if(e.getHotel_id()==hotel.getHotel_id()) {
-//				e.setHotelname(hotel.getHotelname());
-//				e.setLocation(hotel.getLocation());
-//				e.setPhonenumber(hotel.getPhonenumber());
-//			
-	//	}
-		//});
-		// TODO Auto-generated method stub
-		hoteldao.save(hotel);
-		return hotel;
+	public HotelDto updateHotel(HotelDto hoteldto, Long hotel_id) {
+		
+		Hotel h = this.hoteldao.findById(hotel_id) .orElseThrow(()-> new ResourceNotFoundException("Hotel", "Id", hotel_id));
+		
+		h.setHotelname(hoteldto.getHotelname());
+		h.setLocation(hoteldto.getLocation());
+		h.setPhonenumber(hoteldto.getPhonenumber());
+		
+		Hotel updatedHotel = this.hoteldao.save(h);
+		
+		HotelDto hotelDto1 = this.hotelToDto(updatedHotel);
+		
+		return hotelDto1;
+		
+		
+
 	}
 
 	@Override
 		public void deleteHotel(long hotel_id) {
-		// TODO Auto-generated method stub
-		//list=this.list.stream().filter(e->e.getHotel_id()!=parseLong).collect(Collectors.toList());
-		hoteldao.deleteById(hotel_id);
+		
+		Hotel hotel = this.hoteldao.findById(hotel_id)
+				.orElseThrow(() -> new ResourceNotFoundException("Hotel", "Id", hotel_id));
+		
+		this.hoteldao.delete(hotel);
 		
 	}
+	
+	private Hotel dtoToHotel(HotelDto hoteldto) {
+		Hotel hotel=new Hotel();
+		hotel.setHotel_id(hoteldto.getHotel_id());
+		hotel.setHotelname(hoteldto.getHotelname());
+		hotel.setLocation(hoteldto.getLocation());
+		hotel.setPhonenumber(hoteldto.getPhonenumber());
+		return hotel;
+		
+		
+	}
+	private HotelDto hotelToDto(Hotel hotel) {
+		HotelDto hoteldto=new HotelDto();
+		hoteldto.setHotel_id(hotel.getHotel_id());
+		hoteldto.setHotelname(hotel.getHotelname());
+		hoteldto.setLocation(hotel.getLocation());
+		hoteldto.setPhonenumber(hotel.getPhonenumber());
+		return hoteldto;
 
 	
 
+}
 }

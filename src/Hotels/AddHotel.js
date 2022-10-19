@@ -1,14 +1,18 @@
+import axios from 'axios';
 import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function AddHotel() {
 
+    let navigate = useNavigate()
+
     const [user,setUser] = useState({
-        HotelName:"",
+        hotelname:"",
         location:"",
         phonenumber:""
     });
 
-    const{HotelName,location,phonenumber} = user;
+    const{hotelname,location,phonenumber} = user;
 
     const onInputChange = (e) => {
         setUser({...user, [e.target.name]: e.target.value});
@@ -16,9 +20,11 @@ export default function AddHotel() {
     };
 
 
-    const onSubmit = (e)=>{
-
-    }
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        await axios.post("http://localhost:9090/hotels", user);
+        navigate("/");
+    };
 
 
 
@@ -28,16 +34,18 @@ export default function AddHotel() {
         <div className='row'>
             <div className='col-md-6 offset-md-3 border rounded p-4 mt-2 shadow'>
                 <h2 className='text-center m-4'>Add Hotel details </h2>
-                <form></form>
+
+
+                <form onSubmit={(e) => onSubmit(e)}>
                 <div className='mb-3'>
-                    <label htmlFor='HotelName' className='form-label'>
+                    <label htmlFor='hotelname' className='form-label'>
                         HotelName
                     </label>
                     <input type={"text"}
                     className="form-control"
                     placeholder='Enter Hotel Name'
-                    name='HotelName'
-                    value={HotelName}
+                    name='hotelname'
+                    value={hotelname}
                     onChange={(e) => onInputChange(e)}
                     />
                 </div>
@@ -70,9 +78,9 @@ export default function AddHotel() {
                 </div>
 
                <button type='submit' className='btn btn-outline-success'>Submit</button>
-               <button type='submit' className='btn btn-outline-danger mx-2'>Cancel</button>
+               <Link className='btn btn-outline-danger mx-2' to={'/'}>Cancel</Link>
 
-
+               </form>
 
 
             </div>

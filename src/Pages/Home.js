@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-
+import { Link, useParams } from 'react-router-dom';
+import UpdateHotel from '../Hotels/UpdateHotel';
 export default function Home() {
 
 const[users, setUsers] = useState([])
+const{hotel_id} = useParams()
 
 
 useEffect(()=>{
@@ -13,6 +15,11 @@ useEffect(()=>{
 const loadUsers = async() => {
     const result = await axios.get("http://localhost:9090/hotels");
     setUsers(result.data);
+};
+
+const deleteHotel=async(hotel_id) =>{
+    await axios.delete(`http://localhost:9090/hotels/${hotel_id}`)
+    loadUsers();
 };
 
 
@@ -44,8 +51,10 @@ const loadUsers = async() => {
       <td>{user.phonenumber}</td>
       <td>
         <button className='btn btn-primary mx-2'>View</button>
-        <button className='btn btn-outline-primary mx-2'>Edit</button>
-        <button className='btn btn-danger mx-2'>Delete</button>
+        <Link className='btn btn-outline-primary mx-2' to={`/updatehotel/${user.hotel_id}`}>
+        Update</Link>
+        <button className='btn btn-danger mx-2'
+        onClick={()=>deleteHotel(user.hotel_id)}>Delete</button>
       </td>
     </tr>
         ))
