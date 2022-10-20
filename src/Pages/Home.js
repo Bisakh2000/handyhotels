@@ -35,7 +35,7 @@ const deleteHotel=async(hotel_id) =>{
       <th scope='col'>Hotelid</th>
       <th scope="col">Hotelname</th>
       <th scope="col">Location</th>
-      <th scope="col">Phonenumber</th>
+      <th scope="col">Contact Details(Phone Number / Email)</th>
       <th scope='col'>Actions</th>
     </tr>
   </thead>
